@@ -6,12 +6,15 @@ import DeleteBtn from "@/components/delete-button"
 import Loading from "@/components/loading"
 import { useFetchData } from "@/hooks/useFetchData"
 import { useState } from "react"
+import { ToastContainer, toast } from 'react-toastify';
+import { blogs } from "../../../data"
+import Image from "next/image"
 
 export default function Homepage() {
   const [changeDetected, setChangeDetected] = useState(false)
-  const { data: todos, loading, error } = useFetchData({ url: "/api/todos", options: {method: "GET"}, trigger: changeDetected })
+  const { data: todos, loading, error } = useFetchData({ url: "/api/todos", options: { method: "GET" }, trigger: changeDetected })
 
-  if (loading) return <Loading/>
+  if (loading) return <Loading />
   if (error) return <p>Error: {JSON.stringify(error)}</p>
 
   return (
@@ -30,9 +33,34 @@ export default function Homepage() {
             <Link href={`/todos/edit/${todo.id}`}>
               <Pencil className="hover:cursor-pointer" size={18} />
             </Link>
-            <DeleteBtn id={todo.id} setChangeDetected={setChangeDetected}/>
+            <DeleteBtn id={todo.id} setChangeDetected={setChangeDetected} toast={toast} />
           </div>
         </div>)}
+      </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
+      <div className="grid grid-cols-3 gap-5">
+          {
+            blogs.map((blog) => (
+              <div key={blog.id} className="size-[200px]">
+                <img className="w-full h-full" src={blog.thumbnail} alt={blog.thumbnail}/>
+                <h2 className="text-xl font-bold">{blog.title}</h2>
+               
+                <Link href={`/blogs/${blog.id}`} className="text-blue-500">Read more</Link>
+              </div>
+            ))
+          }
       </div>
     </div>
   )

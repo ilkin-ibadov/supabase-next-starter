@@ -5,6 +5,7 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Loading from "@/components/loading";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function EditTodo({ params }) {
     const [id, setId] = useState(null);
@@ -19,7 +20,7 @@ export default function EditTodo({ params }) {
     async function editTodo(formData) {
         const title = formData.get("title")?.toString();
         const description = formData.get("description")?.toString();
-    
+
         const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
             method: 'PUT',
             body: JSON.stringify({
@@ -30,6 +31,8 @@ export default function EditTodo({ params }) {
                 'Content-Type': 'application/json'
             }
         });
+
+        res.ok ? toast.success("Todo updated successfully") : toast.error("Failed to update todo");
     }
 
     useEffect(() => {
@@ -44,7 +47,7 @@ export default function EditTodo({ params }) {
         getTodo()
     }, [id])
 
-    if(!todo) return <Loading type="txt"/>
+    if (!todo) return <Loading type="txt" />
 
     return (
         <div className="w-full h-screen flex items-center justify-center">
@@ -66,6 +69,18 @@ export default function EditTodo({ params }) {
                     </SubmitButton>
                 </div>
             </form>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }

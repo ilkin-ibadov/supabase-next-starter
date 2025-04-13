@@ -38,7 +38,7 @@ export async function PUT(req: Request, {params} : { params: { id: string } }) {
 
 export async function DELETE(req: Request, {params} : { params: { id: string } }) {
     const supabase = await createClient()
-    const id = params.id;
+    const {id} = await params;
 
     if (!id) return new Response(JSON.stringify({ error: 'ID is required' }), { status: 400 });
 
