@@ -44,7 +44,12 @@ export const blogs = [
         `,
         author: {
             name: "Tracey Wilson",
-            thumbnail: "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png"
+            thumbnail: "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png",
+            socials: {
+                twitter: "https://twitter.com/traceywilson",
+                facebook: "https://facebook.com/traceywilson",
+                instagram: "https://instagram.com/traceywilson",
+            }
         },
         category: "Technology",
     },
